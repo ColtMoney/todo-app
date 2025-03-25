@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <div x-data="listManager" x-init="fetchLists">
+      <button x-on:click="fetchLists">Load Lists</button>
+      <span x-text="selectedListID"></span>
+      <select x-model="selectedListID">
+        <template x-for="listID in Object.keys(lists)" :key="listID">
+          <option :value="listID" x-text="lists[listID].name"></option>
+        </template>
+      </select>
+      <template x-if="selectedListID">
+        <div x-data="list(lists[selectedListID])">
+          <ul>
+            <template x-for="todo in list.todos" :key="todo.id">
+              <li x-data="todoItem(todo)">
+                <input
+                  type="text"
+                  x-model="todo.title"
+                  x-on:blur="updateTodo()"
+                />
+                <input
+                  type="checkbox"
+                  x-model="todo.completed"
+                  x-on:change="updateTodo()"
+                />
+                <button x-on:click="deleteTodo()"><i class="fas fa-trash"></i>Delete</button>
+              </li>
+            </template>
+          </ul>
+          <input type="text" x-model="newTodoTitle" />
+          <button x-on:click="addTodo()">Add Todo</button>
+        </div>
+      </template>
+    </div>
+  </body>
+</html>
