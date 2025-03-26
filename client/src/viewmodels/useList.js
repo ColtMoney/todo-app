@@ -18,9 +18,13 @@ export function useList(list, api) {
         });
         this.newTodoTitle = "";
     },
-    removeTodo() {
+    deleteTodo(todo) {
       list.todos = list.todos.filter((t) => t.id !== todo.id);
       api.delete(`/todos/${todo.id}`);
+    },
+
+    async updateTodo(todo) {
+      await api.put(`/todos/${todo.id}`, todo);
     },
   };
 }

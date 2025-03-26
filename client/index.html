@@ -20,24 +20,24 @@
         <div x-data="list(lists[selectedListID])">
           <ul class="mb-20">
             <template x-for="todo in lists[selectedListID].todos">
-              <li x-data="todoItem(todo)">
+              <li>
                 <input
                   type="text"
                   x-model="todo.title"
-                  x-on:blur="updateTodo()"
+                  x-on:blur="updateTodo(todo)"
                 />
                 <input
                   type="checkbox"
                   x-model="todo.completed"
-                  x-on:change="updateTodo()"
+                  x-on:change="updateTodo(todo)"
                 />
-                <button x-on:click="deleteTodo()" class="btn btn-red"><i class="fas fa-trash"></i></button>
+                <button x-on:click="deleteTodo(todo)" class="btn btn-red"><i class="fas fa-trash"></i></button>
               </li>
             </template>
           </ul>
           <div class="d-flex">
             <input type="text" x-model="newTodoTitle" />
-            <button x-on:click="addTodo()" class="btn btn-blue">Add Todo</button>
+            <button x-on:click="addTodo" class="btn btn-blue">Add Todo</button>
           </div>
         </div>
       </template>
