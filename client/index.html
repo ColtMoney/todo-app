@@ -10,17 +10,16 @@
   </head>
   <body>
     <div x-data="listManager" x-init="fetchLists">
-      <button x-on:click="fetchLists">Load Lists</button>
-      <span x-text="selectedListID"></span>
+      <button x-on:click="fetchLists" class="btn btn-blue">Load Lists</button>
       <select x-model="selectedListID">
-        <template x-for="listID in Object.keys(lists)" :key="listID">
+        <template x-for="listID in Object.keys(lists)">
           <option :value="listID" x-text="lists[listID].name"></option>
         </template>
       </select>
       <template x-if="selectedListID">
         <div x-data="list(lists[selectedListID])">
-          <ul>
-            <template x-for="todo in list.todos" :key="todo.id">
+          <ul class="mb-20">
+            <template x-for="todo in lists[selectedListID].todos">
               <li x-data="todoItem(todo)">
                 <input
                   type="text"
@@ -32,12 +31,14 @@
                   x-model="todo.completed"
                   x-on:change="updateTodo()"
                 />
-                <button x-on:click="deleteTodo()"><i class="fas fa-trash"></i>Delete</button>
+                <button x-on:click="deleteTodo()" class="btn btn-red"><i class="fas fa-trash"></i></button>
               </li>
             </template>
           </ul>
-          <input type="text" x-model="newTodoTitle" />
-          <button x-on:click="addTodo()">Add Todo</button>
+          <div class="d-flex">
+            <input type="text" x-model="newTodoTitle" />
+            <button x-on:click="addTodo()" class="btn btn-blue">Add Todo</button>
+          </div>
         </div>
       </template>
     </div>

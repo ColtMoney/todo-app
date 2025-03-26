@@ -24,8 +24,7 @@ body {
 }
 
 /* Load Lists button */
-button {
-  background-color: #007bff;
+.btn {
   color: white;
   border: none;
   padding: 10px 20px;
@@ -35,8 +34,20 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.btn.btn-blue {
+  background-color: #007bff;
+}
+
+.btn.btn-red {
+  background-color: #dc3545;
+}
+
+.btn.btn-blue:hover {
   background-color: #0056b3;
+}
+
+.btn.btn-red:hover {
+  background-color: #b02a37;
 }
 
 /* List selector dropdown */
@@ -85,4 +96,12 @@ input[type="checkbox"] {
   height: 20px;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.d-flex {
+  display: flex;
 }

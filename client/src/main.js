@@ -9,33 +9,11 @@ window.Alpine = Alpine;
 
 // Register Alpine data components
 document.addEventListener("alpine:init", () => {
-  Alpine.data("listManager", () => {
-    const { state, fetchLists } = useLists(api);
-    return {
-      lists: state.lists,
-      selectedListID: state.selectedListID,
-      fetchLists
-    };
-  });
+  Alpine.data("listManager", () => useLists(api));
 
-  Alpine.data("list", (list) => {
-    const { state, addTodo, removeTodo } = useList(list, api);
-    return {
-      list,
-      ...state,
-      addTodo,
-      removeTodo,
-    };
-  });
+  Alpine.data("list", (list) => useList(list, api));
 
-  Alpine.data("todoItem", (todo) => {
-    const { updateTodo, deleteTodo } = useTodoItem(todo, api);
-    return {
-      todo,
-      updateTodo,
-      deleteTodo,
-    };
-  });
+  Alpine.data("todoItem", (todo) => useTodoItem(todo, api));
 });
 
 // Start Alpine.js
