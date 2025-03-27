@@ -1,5 +1,4 @@
 import Alpine from "alpinejs";
-import { api } from "./utils/api.js";
 import { useLists } from "./viewmodels/useLists.js";
 import { useList } from "./viewmodels/useList.js";
 
@@ -8,9 +7,9 @@ window.Alpine = Alpine;
 
 // Register Alpine data components
 document.addEventListener("alpine:init", () => {
-  Alpine.data("listManager", () => useLists(api));
+  Alpine.data("listManager", () => useLists());
 
-  Alpine.data("list", (list) => useList(list, api));
+  Alpine.data("list", () => useList());
 });
 
 // Start Alpine.js

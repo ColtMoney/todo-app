@@ -1,30 +1,25 @@
-import { createTodo } from "../models/todo.js";
+import { createTodo, addTodo, deleteTodo, updateTodo } from "../models/todo.js";
 
-export function useList(list, api) {
+export function useList() {
   return {
     newTodoTitle: "",
-    addTodo() {
-      console.log('Adding new todo:', this.newTodoTitle); // Debug
+    async addTodo(list) {
       if (this.newTodoTitle.trim() === "") return;
+
       const newTodo = createTodo(null, this.newTodoTitle, false);
+      newTodo.id = await addTodo(list.id, newTodo);
+
       list.todos.push(newTodo);
-      api
-        .post(`/lists/${list.id}/todos`, {
-          title: newTodo.title,
-          completed: newTodo.completed,
-        })
-        .then((response) => {
-          newTodo.id = response.data.id;
-        });
-        this.newTodoTitle = "";
+      this.newTodoTitle = "";
     },
-    deleteTodo(todo) {
+
+    async deleteTodo(list, todo) {
       list.todos = list.todos.filter((t) => t.id !== todo.id);
-      api.delete(`/todos/${todo.id}`);
+      await deleteTodo(todo.id);
     },
 
     async updateTodo(todo) {
-      await api.put(`/todos/${todo.id}`, todo);
+      await updateTodo(todo.id, todo);
     },
   };
 }

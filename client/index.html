@@ -10,14 +10,18 @@
   </head>
   <body>
     <div x-data="listManager" x-init="fetchLists">
+
       <button x-on:click="fetchLists" class="btn btn-blue">Load Lists</button>
+
       <select x-model="selectedListID">
         <template x-for="listID in Object.keys(lists)">
           <option :value="listID" x-text="lists[listID].name"></option>
         </template>
       </select>
+
       <template x-if="selectedListID">
-        <div x-data="list(lists[selectedListID])">
+        <div x-data="list">
+
           <ul class="mb-20">
             <template x-for="todo in lists[selectedListID].todos">
               <li>
@@ -31,16 +35,19 @@
                   x-model="todo.completed"
                   x-on:change="updateTodo(todo)"
                 />
-                <button x-on:click="deleteTodo(todo)" class="btn btn-red"><i class="fas fa-trash"></i></button>
+                <button x-on:click="deleteTodo(lists[selectedListID], todo)" class="btn btn-red"><i class="fas fa-trash"></i></button>
               </li>
             </template>
           </ul>
+
           <div class="d-flex">
             <input type="text" x-model="newTodoTitle" />
-            <button x-on:click="addTodo" class="btn btn-blue">Add Todo</button>
+            <button x-on:click="addTodo(lists[selectedListID])" class="btn btn-blue">Add Todo</button>
           </div>
+
         </div>
       </template>
+
     </div>
   </body>
 </html>
