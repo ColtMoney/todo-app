@@ -9,9 +9,9 @@
     <script type="module" src="/src/main.js"></script>
   </head>
   <body>
-    <div x-data="listManager" x-init="fetchLists">
+    <div x-data="listManager" x-init="loadLists">
 
-      <button x-on:click="fetchLists" class="btn btn-blue">Load Lists</button>
+      <button x-on:click="loadLists" class="btn btn-blue">Load Lists</button>
 
       <select x-model="selectedListID">
         <template x-for="listID in Object.keys(lists)">

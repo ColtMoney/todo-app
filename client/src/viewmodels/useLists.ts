@@ -1,25 +1,19 @@
-import { createList, fetchTodosForList, getLists } from '../models/list.ts';
-import { Todo } from '../models/todo.ts';
+import { getLists, addTodoToList } from '../models/repositories/list.ts';
 
-export interface List {
-  id: number;
-  name: string;
-  todos: Todo[];
-}
+import { List } from '../types/api/list.ts';
 
 export default function useLists() {
   return {
     lists: {} as { [key: string]: List },
     selectedListID: null as string | null,
-    async fetchLists(): Promise<void> {
+    async loadLists(): Promise<void> {
       const lists: List[] = await getLists();
       console.log('API Response:', lists); // Debug
 
       await Promise.all(
-        lists.map(async ({ id, name }) => {
-          const list: List = createList(id, name);
-          list.todos = await fetchTodosForList(id);
-          this.lists[id] = list;
+        lists.map(async (list) => {
+          const updatedList = { ...list, todos: await addTodoToList(list.id) };
+          this.lists[list.id] = updatedList;
         }),
       );
 

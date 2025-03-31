@@ -1,16 +1,13 @@
-import {
-  createTodo, addTodo, deleteTodo, updateTodo, Todo,
-} from '../models/todo.ts';
-import { List } from './useLists.ts';
+import { addTodo, deleteTodo, updateTodo } from '../models/repositories/todo.ts';
+import { List } from '../types/api/list.ts';
+import { Todo } from '../types/api/todo.ts';
 
 export default function useList() {
   return {
     newTodoTitle: '' as string,
     async addTodo(list: List): Promise<void> {
       if (this.newTodoTitle.trim() === '') return;
-
-      const newTodo: Todo = createTodo(null, this.newTodoTitle, false);
-      newTodo.id = await addTodo(list.id, this.newTodoTitle);
+      const newTodo = await addTodo(list.id, this.newTodoTitle);
 
       list.todos.push(newTodo);
       this.newTodoTitle = '';
